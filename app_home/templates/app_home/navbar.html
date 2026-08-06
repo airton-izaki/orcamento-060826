@@ -1,0 +1,34 @@
+
+{% load static %}
+
+{% block content %}
+    <nav class="navbar navbar-expand-lg">    
+        <div class="content-fluid">
+             <!---------- logo --------------->
+            <a  class = "navbar-brand"  href = "/">
+                <img class = logo  src = "{% static 'image/logo_02.png' %}" alt = "logo">
+                <span>Orçamento</span> 
+            </a>
+            <!----------botão collapse ------------->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class = "collapse  navbar-collapse   justify-content-end" id="navbarNav">
+                <ul class = "nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href = "/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href = "{% url 'despesa' %}">Despesa</a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href = "{% url 'cartao' %}">Cartão de Crédito</a>
+                    </li>
+                  
+                </ul>
+            </div>
+        </div>
+    </nav>
+{% endblock %}

@@ -1,0 +1,101 @@
+
+/* ==========================================================================
+   Estilização Customizada da Navbar
+   ========================================================================== */
+
+/* 1. Fundo e Espaçamento Principal */
+.navbar {
+    background-color: #1e293b; /* Um azul escuro moderno (Slate) */
+    padding: 0.8rem 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+}
+
+/* Ajuste caso use container-fluid ou se mantiver o content-fluid */
+.navbar .content-fluid, 
+.navbar .container-fluid {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+/* 2. Brand (Logo + Texto) */
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espaço entre a imagem e o texto */
+    color: #ffffff !important;
+    font-weight: 700;
+    font-size: 1.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+}
+
+.navbar-brand .logo {
+    height: 40px; /* Define uma altura fixa para sua logo não quebrar o layout */
+    width: auto;
+    object-fit: contain;
+}
+
+/* 3. Links de Navegação */
+.navbar .nav {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Espaçamento entre os itens do menu */
+    list-style: none;
+    margin-bottom: 0;
+    padding-left: 0;
+}
+
+.navbar .nav-link {
+    color: #cbd5e1 !important; /* Cor de texto suave */
+    font-weight: 500;
+    font-size: 1rem;
+    padding: 0.5rem 1rem !important;
+    border-radius: 6px;
+    transition: all 0.25s ease-in-out;
+    position: relative;
+}
+
+/* Efeito de Hover (Passar o mouse) */
+.navbar .nav-link:hover {
+    color: #10b981 !important; /* Verde esmeralda (combina com tema de orçamento) */
+    background-color: rgba(16, 185, 129, 0.1); /* Fundo falso bem sutil */
+}
+
+/* 4. Botão Toggle (Mobile) */
+.navbar-toggler {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.25rem 0.5rem;
+}
+
+.navbar-toggler:focus {
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.5); /* Outline personalizado no foco */
+}
+
+/* Força o ícone do hambúrguer a ficar branco no modo escuro */
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.75%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+/* 5. Responsividade (Ajustes para telas menores) */
+@media (max-width: 991.98px) {
+    .navbar .collapse {
+        background-color: #1e293b;
+        padding: 1rem 0;
+    }
+    
+    .navbar .nav {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        width: 100%;
+    }
+    
+    .navbar .nav-link {
+        width: 100%;
+        padding: 0.75rem 1rem !important;
+    }
+}
