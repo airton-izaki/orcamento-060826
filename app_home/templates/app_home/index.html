@@ -8,4 +8,96 @@
 
 {% block content %}
     <h1>Index</h1>
+    <link rel = "stylesheet" href = "{% static 'style/index1.css'%}">
+
+    <!-------- Bloco de Títulos ------------>
+    <div class = "header">
+        <h2> <i class = "bi bi-piggy-bank"></i> Resumo da Movimentação Financeira    </h2>
+        <p class = "index-subtitle">Visão consolidada das suas finanças</p>
+    </div>
+
+    <div class = "container">
+        <!-------- Bloco de Cards - Primeira linha ------------>
+        <div class = "row">
+            <div class = "col-6">
+                <div class = "card">
+                    <div class = "card-header">
+                        <h5 class = "card-header-title">
+                            <span class = "icon-box icon-despesas">
+                                <i class = "bi bi-cash"></i>
+                            </span>
+                            Despesas
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class = "card-top">
+                            <h6 class = "card-label text-muted mb-0">Despesas do mês de {{ mes }}</h6>                                   
+                        </div>
+                        <h2 class = "card-value">R$ {{ total_despesas_filtradas|floatformat:2 }}</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class = "col-6">
+                <div class = "card">
+                    <div class = "card-header">
+                        <h5 class="card-header-title">
+                            <span class="icon-box icon-receitas">
+                                <i class="bi bi-coin"></i>
+                            </span>
+                            Receitas
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-top">
+                            <h6 class="card-label">Receitas do Mês de {{ mes }}</h6>                               
+                        </div>
+                        <h2 class="card-value">R$ {{ total_receitas_filtradas|floatformat:2 }}</h2>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <!-------- Bloco de Cards - Segunda linha ------------>
+        <div class = "row">
+            <div class = "col-6">
+                <div class = "card">
+                    <div class = "card-header">
+                        <h5 class = "card-header-title">
+                            <span class = "icon-box icon-cartao">
+                                <i class="bi bi-credit-card"></i>
+                            </span>
+                            Cartão de Crédito
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class = "card-top">
+                            <h6 class = "card-label">Despesas com Cartão de Crédito no mês de  {{ mes }}</h6>                                   
+                        </div>
+                        <h2 class = "card-value">R$ {{ total_cartao_mes|floatformat:2 }}</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class = "col-6">
+                <div class = "card">
+                    <div class = "card-header">
+                        <h5 class="card-header-title">
+                            <span class="icon-box icon-investimentos">
+                                <i class="bi bi-graph-up-arrow"></i>
+                            </span>
+                            Investimentos
+                        </h5>
+                    </div>
+                    <div class = "card-body">
+                        <div class = "card-top">
+                            <h6 class = "card-label">Investimentos efetuados no mês de {{ mes }}</h6>                               
+                        </div>
+                        <h2 class = "card-value">R$ {{ total_despesas|floatformat:2 }}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
