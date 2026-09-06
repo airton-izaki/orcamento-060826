@@ -1,0 +1,130 @@
+/* Reset básico e container do menu */
+
+.cartoes-wrapper {
+    width: 100%;
+    max-width: 2000px; /* Ajuste este valor para aumentar ou diminuir a largura */
+   
+    margin: 0 auto;    /* Centraliza o contêiner na página */
+}
+
+/* Tabela ocupando todo o espaço do contêiner */
+.cartoes-table {
+    width: 100%;
+    table-layout: auto;
+}
+
+.btn-header {
+  width: 100%;
+  padding: 1rem 0;
+}
+
+.menu-navegacao {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-item {
+  display: inline-flex;
+}
+
+/* Base unificada para os botões e links */
+.btn-header button,
+.btn-header a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  
+  padding: 0.625rem 1.25rem;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  
+  background-color: #ffffff;
+  color: #374151;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  
+  transition: all 0.2s ease-in-out;
+
+  width: 260px;
+}
+
+/* Alinhamento e tamanho dos ícones */
+.btn-header .material-symbols-outlined {
+  font-size: 1.25rem;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* --- Estilos Específicos para cada Botão --- */
+
+/* 1. Filtros (Estilo Neutro/Secundário) */
+.btn-azul {
+  background-color: #f3f4f6;
+  color: #1f2937;
+  border-color: #e5e7eb;
+}
+
+.btn-azul:hover {
+  background-color: #e5e7eb;
+  color: #111827;
+}
+
+/* 2. Lançar Despesa (Destaque Principal / Chamada de Ação) */
+.btn-despesa {
+  background-color: #2563eb;
+  color: #374151 !important;
+  box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+}
+
+.btn-despesa:hover {
+  background-color: #1d4ed8;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+}
+
+/* 3. Criar Grupo de Despesa */
+.btn-grupo {
+  border-color: #d1d5db;
+}
+
+.btn-grupo:hover {
+  background-color: #f9fafb;
+  border-color: #9ca3af;
+  color: #111827;
+}
+
+/* 4. Criar Espécie de Despesa */
+.btn-especie {
+  border-color: #d1d5db;
+}
+
+.btn-especie:hover {
+  background-color: #f9fafb;
+  border-color: #9ca3af;
+  color: #111827;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 640px) {
+  .menu-navegacao {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .btn-header button,
+  .btn-header a {
+    width: 100%;
+    justify-content: center;
+  }
+}

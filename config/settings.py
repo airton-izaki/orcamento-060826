@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'app_home',
     'app_despesa',
     'app_cartao',
+    'app_receita',
+    'app_user',    
 ]
 
 MIDDLEWARE = [
@@ -101,6 +103,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = 'app_user.User'
 
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/

@@ -1,0 +1,152 @@
+/* Estilos Customizados */
+    .fatura-container {
+        max-width: 900px;
+        margin: 2rem auto;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        color: #333333;
+    }
+
+    .fatura-card {
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+    }
+
+    .fatura-header {
+        background-color: #4b5563;
+        color: #ffffff;
+        padding: 1.25rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .fatura-header-inputs {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .fatura-field-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .fatura-field-group label {
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .fatura-field-group input {
+        background-color: #f3f4f6;
+        border: 1px solid #d1d5db;
+        border-radius: 4px;
+        padding: 0.35rem 0.6rem;
+        font-size: 0.875rem;
+        color: #1f2937;
+        outline: none;
+    }
+
+    .fatura-header-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+    }
+
+    .fatura-table-wrapper {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .fatura-table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+    }
+
+    .fatura-table th, 
+    .fatura-table td {
+        padding: 0.85rem 1rem;
+    }
+
+    .fatura-section-header {
+        background-color: #f9fafb;
+        border-top: 1px solid #e5e7eb;
+        border-bottom: 1px solid #e5e7eb;
+        font-weight: 700;
+        color: #111827;
+    }
+
+    .fatura-table td.col-currency {
+        width: 40px;
+        color: #6b7280;
+    }
+
+    .fatura-table td.col-value {
+        text-align: right;
+        width: 180px;
+    }
+
+    /* Utilitários de Texto e Cores */
+    .text-highlight { color: #2563eb; font-weight: 600; }
+    .text-success { color: #16a34a; font-weight: 700; }
+    .text-muted { color: #6b7280; }
+    .text-small { font-size: 0.875rem; }
+    .text-bold { font-weight: 700; }
+    
+    .row-encargos { color: #b45309; font-weight: 600; }
+    .row-remanescente { 
+        background-color: #fef2f2; 
+        color: #dc2626; 
+        font-weight: 700; 
+        border-top: 1px solid #fecaca;
+    }
+
+    /* Entradas de Form (Inputs de Tabela) */
+    .input-fatura {
+        width: 100%;
+        padding: 0.4rem 0.6rem;
+        border-radius: 4px;
+        text-align: right;
+        font-weight: 700;
+        font-size: 0.9rem;
+        box-sizing: border-box;
+    }
+
+    .input-encargos {
+        background-color: #fffbebfb;
+        border: 1px solid #fde68a;
+        color: #b45309;
+    }
+
+    .input-pago {
+        background-color: #eff6ff;
+        border: 1px solid #bfdbfe;
+        color: #2563eb;
+    }
+
+    .fatura-footer {
+        padding: 1.25rem;
+        text-align: right;
+        background-color: #ffffff;
+    }
+
+    .btn-salvar {
+        background-color: #16a34a;
+        color: #ffffff;
+        border: none;
+        padding: 0.6rem 1.5rem;
+        font-weight: 700;
+        border-radius: 6px;
+        cursor: pointer;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.2s ease;
+    }
+
+    .btn-salvar:hover {
+        background-color: #15803d;
+    }

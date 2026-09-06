@@ -1,0 +1,150 @@
+{% extends 'app_home/base.html' %}
+
+{% load static %}
+
+{% block title %}
+    Criar Despesas
+{% endblock %}
+
+{% block content %}
+    <h1>Criar despesas</h1>
+     <div class = "btn-header">
+        <ul class = "menu-navegacao">
+            <li class = "item">
+                <a class = "btn_grupo" href = "{% url 'criar_grupo' %}">Criar Grupo</a>
+            </li>
+            <li class = "item">
+                <a class = "btn_especie " href = "{% url 'criar_especie' %}">Criar Espécie</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="card shadow">
+        <div class = "card-header bg-primary text-white">
+            <h4 class = "mb-0">Nova Despesa</h4>
+        </div>       
+
+        <div class = "card-body">
+            
+            <form  class = "form-ajax" method = "post" id = "formDespesa" novalidate>
+                {% csrf_token %}
+
+                <div id="errorContainer" class="alert alert-danger d-none"></div>
+
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+
+                <div class = "row g-3">
+                    <!--------  Campo - Grupo  -------->
+                    <div class="col-md-6">
+                        <label class="form-label">Grupo de Despesa</label>
+                        {{ form.grupo }}
+                        {% if form.grupo.errors %}<div class="text-danger small">{{ form.grupo.errors }}</div>{% endif %}
+                    </div>
+                    
+                    <!--------  Campo - Espécie  -------->
+                    <div class="col-md-6">
+                        <label class="form-label">Espécie de Despesa</label>
+                        {{ form.especie }}
+                        {% if form.especie.errors %}<div class="text-danger small">{{ form.especie.errors }}</div>{% endif %}
+                    </div>
+                </div>                           
+
+                <!--------  Campo - Descrição  -------->
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Descrição</label>
+                        {{ form.descricao }}
+                        {% if form.descricao.errors %}<div class="text-danger small">{{ form.descricao.errors }}</div>{% endif %}
+                    </div>                          
+
+                    <!--------  Campo - Local  -------->
+                    <div class="col-md-6">
+                        <label class="form-label">Local</label>
+                        {{ form.local }}
+                        {% if form.local.errors %}<div class="text-danger small">{{ form.local.errors }}</div>{% endif %}
+                    </div>
+
+                    <!--------  Campo - Data  -------->
+                    <div class="col-md-6">
+                        <label class="form-label">Data</label>
+                        {{ form.data }}
+                        {% if form.data.errors %}<div class="text-danger small">{{ form.data.errors }}</div>{% endif %}
+                    </div>
+
+                    <!--------  Campo - Valor  -------->
+                    <div class="col-md-6">
+                        <label class="form-label">Valor</label>
+                        {{ form.valor }}
+                        {% if form.valor.errors %}<div class="text-danger small">{{ form.valor.errors }}</div>{% endif %}
+                    </div>                                
+
+                    <!--------  Campo - Forma de Pagamento  -------->
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Forma de Pagamento</label>
+                        {{ form.forma_pagamento }}
+                        {% if form.forma_pagamento.errors %}<div class="text-danger small">{{ form.forma_pagamento.errors }}</div>{% endif %}
+                    </div>
+
+                    <!--------  Campo - Origem  -------->
+                    <div class = "col-md-6">
+                        <label class = "form-label fw-bold">Origem da Compra</label>
+                        {{ form.origem }}
+                        {% if form.origem.errors %}<div class="text-danger small">{{ form.origem.errors }}</div>{% endif %}
+                    </div>
+
+                    <!--------  Campo - Observação  -------->
+                    <div class="col-md-12">
+                        <label class="form-label">Observações</label>
+                        {{ form.observacao }}
+                        {% if form.observacao.errors %}<div class="text-danger small">{{ form.observacao.errors }}</div>{% endif %}
+                    </div>
+                </div>
+
+                <!--------  Modal do Cartão  -------->
+                <div class="modal fade" id="modalCartao" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalCartaoLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-dark text-white">
+                                <h5 class="modal-title" id="modalCartaoLabel">Dados do Cartão de Crédito</h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" id="btnFecharModalX"></button>
+                            </div>
+                            <div class="modal-content p-4 border-0">
+                                <div class="mb-3">
+                                    <label class="form-label">Escolha o Cartão</label>
+                                    {{ form.cartao }}
+                                    {% if form.cartao.errors %}<div class="text-danger small">{{ form.cartao.errors }}</div>{% endif %}
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Quantidade de Parcelas</label>
+                                    {{ form.parcela }}
+                                    {% if form.parcela.errors %}<div class="text-danger small">{{ form.parcela.errors }}</div>{% endif %}
+                                </div>
+                                <div class="alert alert-info py-2 small mb-0">
+                                    As parcelas e datas de vencimento serão calculadas pelo sistema baseadas nas regras do cartão escolhido.
+                                </div>
+                            </div>
+                            <div class="modal-footer bg-light">
+                                <button type = "button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnCancelarModal">Confirmar e Voltar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4 d-flex gap-2">
+                    <button  class = "btn btn-success btn-lg w-100"  type = "submit"   name = "acao"  value = "salvar">Salvar Despesa</button>
+                    <button  class = "btn btn-warning" type = "submit" name = "acao"  value = "salvar_novo">Salvar e Nova Despesa</button>
+                    <a href="{% url 'despesa' %}" class="btn btn-secondary btn-lg w-100 d-flex align-items-center justify-content-center">Voltar</a>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+    
+    <script src = "{% static 'js/filtro_grupo_especie.js' %}"></script>
+    <script src = "{% static 'js/modal_cartao.js' %}"></script>
+{% endblock %}

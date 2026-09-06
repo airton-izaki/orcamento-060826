@@ -1,0 +1,196 @@
+/* ---------------------------------------------------------
+   Cabeçalho
+   --------------------------------------------------------- */
+.resumo-cabecalho {
+    margin-bottom: 1rem;
+    align-items: center;
+}
+.resumo-titulo {
+    margin-bottom: 0;
+    font-weight: 700;
+}
+.resumo-acoes {
+    margin-top: 0.5rem;
+    text-align: left;
+}
+
+
+/* ---------------------------------------------------------
+   Filtros
+   --------------------------------------------------------- */
+.resumo-filtros {
+    margin-bottom: 1.5rem;
+    background-color: #f8f9fa;
+    border: 0;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+.resumo-label {
+    margin-bottom: 0.25rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #6c757d;
+}
+.resumo-filtro-acoes {
+    display: flex;
+    gap: 0.5rem;
+}
+.resumo-filtro-acoes .btn-primary {
+    flex: 1;
+}
+
+
+/* ---------------------------------------------------------
+   Filtros
+   --------------------------------------------------------- */
+.resumo-filtros {
+    margin-bottom: 1.5rem;
+    background-color: #f8f9fa;
+    border: 0;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+.resumo-label {
+    margin-bottom: 0.25rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #6c757d;
+}
+.resumo-filtro-acoes {
+    display: flex;
+    gap: 0.5rem;
+}
+.resumo-filtro-acoes .btn-primary {
+    flex: 1;
+}
+
+
+/* ---------------------------------------------------------
+   Tabela principal
+   --------------------------------------------------------- */
+.resumo-tabela {
+    overflow: hidden;
+    border: 0;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+.resumo-tabela-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    background-color: #212529;
+    color: #ffffff;
+}
+.resumo-tabela-titulo {
+    font-size: 1rem;
+    font-weight: 700;
+}
+.resumo-total {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+
+/* ---------------------------------------------------------
+   Tabela
+   --------------------------------------------------------- */
+.resumo-table {
+    margin-bottom: 0;
+    vertical-align: middle;
+}
+
+
+/* ---------------------------------------------------------
+   Grupo
+   --------------------------------------------------------- */
+.table-group-header {
+    cursor: pointer;
+}
+.grupo-nome {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    font-weight: 700;
+}
+.grupo-valor {
+    padding-top: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 1rem;
+
+    text-align: right;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #0d6efd;
+}
+.icon-collapse {
+    margin-right: 0.5rem;
+    color: #0d6efd;
+    transition: transform 0.2s ease;
+}
+
+
+/* ---------------------------------------------------------
+   Subgrupos
+   --------------------------------------------------------- */
+.subgrupo-container {
+    padding: 0;
+    border: 0;
+}
+.subgrupo-area {
+    padding: 0.5rem 1rem;
+
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}
+.subgrupo-area table {
+    margin-bottom: 0;
+}
+.subgrupo-nome {
+    padding-left: 1rem;
+    color: #6c757d;
+}
+.subgrupo-nome i {
+    margin-right: 0.5rem;
+    color: #6c757d;
+}
+.subgrupo-valor {
+    padding-right: 0.5rem;
+    text-align: right;
+    color: #212529;
+    font-weight: 600;
+}
+
+
+/* ---------------------------------------------------------
+   Estado sem registros
+   --------------------------------------------------------- */
+.nenhum-registro {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+    text-align: center;
+    color: #6c757d;
+}
+.nenhum-registro i {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 3rem;
+    color: #6c757d;
+}
+
+
+/* ---------------------------------------------------------
+   Responsividade
+   --------------------------------------------------------- */
+@media (min-width: 768px) {
+    .resumo-acoes {
+        margin-top: 0;
+        text-align: right;
+    }
+}
+@media (max-width: 767.98px) {
+    .resumo-tabela-header {
+        gap: 0.75rem;
+        flex-wrap: wrap;
+    }
+    .resumo-total {
+        font-size: 0.875rem;
+    }
+}

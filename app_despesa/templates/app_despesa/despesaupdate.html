@@ -1,0 +1,162 @@
+{% extends 'app_home/base.html' %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block content %}    
+    <div class="container mt-4">
+        <div class="card shadow-sm border-0 mx-auto" style="max-width: 800px;">
+
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0 fw-bold">
+                    {% if object %} Editar Despesa: {{ object.descricao }} {% else %} Nova Despesa {% endif %}
+                </h5>
+            </div>
+
+            <div class="card-body">
+                <form   class = "form-ajax" method = "POST">
+                    {% csrf_token %}
+
+                     <div class = "row g-3">  
+                         <!-- Grupo -->
+                         <div class = "col-md-6">
+                            <label class = "form-label small fw-bold text-secondary">
+                                {{ form.grupo.label }}
+                            </label>
+                            {{ form.grupo }}
+
+                            {% if form.grupo.errors %}
+                                <div class="text-danger small">
+                                    {{ form.grupo.errors }}
+                                </div>
+                            {% endif %}
+
+                         </div>                      
+                         <!-- Espécie -->
+                         <div class = "col-md-6">
+                            <label class = "form-label small fw-bold text-secondary">
+                                {{ form.especie.label }}
+                            </label>
+                            {{ form.especie }}
+
+                            {% if form.especie.errors %}
+                                <div class="text-danger small">
+                                    {{ form.especie.errors }}
+                                </div>
+                            {% endif %}
+
+                         </div>                        
+                    </div>
+                    
+                    <div class = "row g-3 mt-2">
+                        <!-- Data -->
+                         <div class = "col-md-6">
+                            <label class = "form-label small fw-bold text-secondary">
+                                {{ form.data.label }}
+                            </label>
+                            {{ form.data }}
+
+                            {% if form.data.errors %}
+                                <div class="text-danger small">
+                                    {{ form.data.errors }}
+                                </div>
+                            {% endif %}
+                         </div>
+
+                         <!-- Descrição -->
+                         <div class = "col-md-6">
+                            <label class = "form-label small fw-bold text-secondary">
+                                {{ form.descricao.label }}
+                            </label>
+                            {{ form.descricao }}
+
+                            {% if form.descricao.errors %}
+                                <div class="text-danger small">
+                                    {{ form.descricao.errors }}
+                                </div>
+                            {% endif %}
+                         </div>
+                    </div>
+
+                    <div class = "row g-3  mt-2">
+                        <!-- Local -->
+                         <div class = "col-md-6">
+                            <label class = "form-label small fw-bold text-secondary">
+                                {{ form.local.label }}
+                            </label>
+                            {{ form.local }}
+
+                            {% if form.local.errors %}
+                                <div class="text-danger small">
+                                    {{ form.local.errors }}
+                                </div>
+                            {% endif %}
+
+                         </div>
+                         <!-- Valor -->
+                         <div class = "col-md-6">
+                            <label class = "form-label small fw-bold text-secondary">
+                                {{ form.valor.label }}
+                            </label>
+                            {{ form.valor }}
+
+                            {% if form.valor.errors %}
+                                <div class="text-danger small">
+                                    {{ form.valor.errors }}
+                                </div>
+                            {% endif %}
+
+                         </div>
+                    </div>
+
+                    <div class = "row g-3  mt-2">
+                        <!-- Forma pagamento -->
+                         <div class = "col-md-6">
+                            <label class = "form-label small fw-bold text-secondary">
+                                {{ form.forma_pagamento.label }}
+                            </label>
+                            {{ form.forma_pagamento }}
+
+                            {% if form.forma_pagamento.errors %}
+                                <div class="text-danger small">
+                                    {{ form.forma_pagamento.errors }}
+                                </div>
+                            {% endif %}
+
+                         </div>
+
+                          <!-- origem -->
+                         <div class = "col-md-6">
+                            <label class = "form-label small fw-bold text-secondary">
+                                {{ form.origem.label }}
+                            </label>
+                            {{ form.origem }}
+
+                            {% if form.origem.errors %}
+                                <div class="text-danger small">
+                                    {{ form.origem.errors }}
+                                </div>
+                            {% endif %}
+
+                         </div>
+                        
+                    </div>
+
+                    <!-- Observação -->
+                    <div class="col-12  mt-2">
+                        <label class="form-label small fw-bold text-secondary">
+                            {{ form.observacao.label }}
+                        </label>
+                        {{ form.observacao }}
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mt-4">
+                        <a href="{% url 'despesa' %}" class="btn btn-secondary btn-sm">Cancelar</a>
+                        <button type="submit" class="btn btn-success btn-sm">Salvar Alterações</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

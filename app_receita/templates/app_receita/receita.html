@@ -1,0 +1,189 @@
+{% extends 'app_home/base.html' %}
+
+{% load static %}
+
+{% block title %}
+    Despesa
+{% endblock %}
+
+{% block content %}
+    <div class = "container mt-5">
+        {% if messages %}
+            {% for message in messages %}
+                <div class = "alert alert-{{ message.tags }} alert-dismissible fade show shadow-sm" role="alert">
+                    {{ message }}
+                    <button type = "button" class = "btn-close" data-bs-dismiss = "alert" aria-label = "Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <!--------Filtro do topo----------->
+        <div class = "row">
+            <div class = "col-12">
+                <ul class = "menu-navegacao">
+                    <li class = "menu-item">
+                         <button class = "btn-padrao btn-azul"
+                                type = "button"
+                                data-bs-toggle = "offcanvas"
+                                data-bs-target = "#filtroReceita"
+                                aria-controls = "filtroReceita">
+                            <i class="bi bi-funnel"></i> Filtros
+                        </button>
+                    </li>
+                    <li class = "menu-item">
+                        <button class = "btn-padrao btn-verde"
+                                id = "tab-listagem"
+                                type = "button">
+                            <i class = "bi bi-list-ul"></i> Ver Todas
+                        </button>
+                    </li>
+                    <li class = "menu-item">
+                        <a class = "btn-padrao btn-laranja" href = "{%  url  'criar_receita'  %}">
+                            <i class="bi bi-plus-circle"></i>Criar Receita
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!---------Título da página-------------->
+        <div class = "row mb-4 mt-4">
+            <div class = "col-12 titulo-pagina">
+                <h2>Receitas</h2>
+            </div>
+        </div>
+
+        <!------------Offcanvas-------------->
+        <div class = "offcanvas offcanvas-start" tabindex = "-1" id = "filtroReceita" aria-labelledby = "filtroReceitaLabel">
+            <div class = "offcanvas-header   border-bottom">
+                <h5 class = "offcanvas-title fw-semibold" id="filtroReceitaLabel">
+                    <i class="bi bi-funnel me-2"></i>Filtrar Receitas
+                </h5>
+                <button type = "button" 
+                        class = "btn-close" 
+                        data-bs-dismiss = "offcanvas"
+                        aria-label = "Fechar">
+                </button>
+            </div>
+
+            <div class = "offcanvas-body">
+                <form  class = "row g-3" method = "get">
+                    <div class = "col-12">
+                        <label for = "data_inicio" class = "form-label small fw-semibold text-secondary">
+                            Data Inicial
+                        </label>
+                        <input 
+                            type = "date"
+                            id = "data_inicio"
+                            name = "data_inicio"
+                            class = "form-control"
+                            value = "{{ data_inicio_atual }}"  >
+                    </div>
+
+                    <div class = "col-12">
+                        <label for = "data_fim" class="form-label small fw-semibold text-secondary">
+                            Data Final
+                        </label>
+                        <input 
+                            type = "date"
+                            id = "data_fim"
+                            name = "data_fim"
+                            class = "form-control"
+                            value = "{{ data_fim_atual }}"   >
+                    </div>
+
+                    <div class = "col-12 mt-4">
+                        <button 
+                            type = "submit"
+                            class = "btn btn-dark w-100 d-flex align-items-center justify-content-center gap-2 shadow-sm">
+                            <i class = "bi bi-search"></i>   Filtrar período
+                        </button>
+                    </div>
+
+                    <div class = "col-12">
+                        <a 
+                            href = "{% url 'receita' %}"
+                            class = "btn btn-outline-secondary w-100 d-flex align-items-center justify-content-center gap-2">
+                            <i class = "bi bi-x-circle"></i> Limpar filtros
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!------------Tabela principal-------------->
+        <div class = "col-12">
+            <div class = "table-main">
+                <table class = "table table-hover table-striped align-middle  mb-0">                                    
+                    <thead class="table-thead">
+                        <tr>
+                            <th scope = "col" class = "ps-3">Data de Recebimento</th>
+                            <th scope = "col" class = "text-center">Titular</th>
+                            <th scope = "col">Fonte Pagadora</th>
+                            <th scope = "col" class = "text-center">Categoria</th>
+                            <th scope = "col" class = "text-center pe-3">Valor</th>
+                            <th scope = "col" class = "text-center" style = "width: 120px;">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for receita in receitas %}
+                        <tr>
+                            <!-- DATA DE RECEBIMENTO -->
+                            <td class = "ps-3 fw-bold text-secondary">                                        
+                                {{ receita.data_recebimento|date:"d/m/Y" }}
+                            </td>
+
+                            <!-- USUÁRIO -->
+                            <td class = "ps-3 fw-bold text-secondary">{{ receita.nome_titular }}</td>
+                                                        
+                            <!-- FONTE PAGADORA -->
+                            <td class="ps-3 fw-bold text-secondary">{{ receita.fonte }}</td>
+                            
+                            <!-- CATEGORIA -->
+                            <td class="ps-3 fw-bold text-secondary text-center">
+                                <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1">
+                                    {{ receita.get_categoria_display }}
+                                </span>
+                            </td>
+                            
+                            <!-- VALOR -->
+                            <td class = "text-center pe-3 fw-bold text-success">
+                                R$ {{ receita.valor|floatformat:2 }}
+                            </td>
+                            
+                            <!-- AÇÕES -->
+                            <td class="text-center">
+                                <a 
+                                    href = "{% url 'editar_receita' receita.pk %}" 
+                                    class = "btn btn-sm btn-outline-secondary border-0 text-dark" 
+                                    title = "Editar Receita">
+                                    <i class = "bi bi-pencil-square fs-5"></i>
+                                </a>
+                                <a
+                                    href = "{% url 'deletar_receita' receita.pk %}" 
+                                    class = "btn btn-sm btn-outline-secondary border-0 text-danger" 
+                                    title = "Excluir Receita"
+                                    onclick = "return confirm('Tem certeza que deseja excluir a receita {{ receita.fonte }}?');">
+                                    <i class = "bi bi-trash3 fs-5"></i>
+                                </a>
+                            </td>
+                        </tr>
+
+                        {% empty %}
+
+                        <tr>
+                            <td colspan = "5" class = "text-center py-5">
+                                <i class = "bi bi-wallet2 fs-2 d-block mb-2 text-muted"></i>
+                                <span class = "text-muted">Nenhuma receita cadastrada</span>
+                            </td>
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+                </table>                    
+            </div>
+        </div>
+    </div>
+{% endblock %}

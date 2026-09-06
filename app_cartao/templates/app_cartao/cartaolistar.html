@@ -1,0 +1,97 @@
+{% extends 'app_home/base.html' %}
+
+{% load static %}
+
+{% block title %}
+    Listar Cartao
+{% endblock %}
+
+{% block content %}
+    <h1>Listar Cartão</h1>
+    
+    <div class = "container-fluid cartoes-wrapper">
+        <div  class = "btn-header">
+            <ul class = "menu-navegacao">
+                <li class = "menu-item">
+                    <a class = "btn-especie"  href = "{% url 'criar_cartao' %}">Criar Cartão</a>
+                </li>
+                <li>
+                    <a class = "btn-despesa" href = "{% url 'cartao' %}">Voltar</a>
+                </li>
+            </ul>            
+        </div>
+    
+        <div class = "table-main table-responsive">
+            <table class = "table table-hover">
+                <thead>
+                    <tr>
+                        <th class="ps-3">ID</th>
+                        <th>TITULAR</th>
+                        <th>BANCO</th>
+                        <th>NOME DO CARTÃO</th>                       
+                        <th>FECHAMENTO</th>
+                        <th>VENCIMENTO</th>
+                        <th>LIMITE</th>
+                        <th class="text-center pe-3">AÇÕES</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {%  for cartao in cartoes  %}
+                        <tr>
+                            <!------- ID ------->
+                            <td class="ps-3 fw-bold"> {{ cartao.id }}  </td>
+
+                            <!------- TITULAR ------->
+                            <td>
+                                {{ cartao.titular }}
+                                {% if cartao.virtual %}
+                                    <span class="badge bg-secondary ms-1">Virtual</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ cartao.banco }}</td>
+                            <td>
+                                <strong>{{ cartao.nome_cartao }}</strong> 
+                                <small class="text-muted">(**** {{ cartao.final }})</small>
+                                {% if cartao.categoria %}
+                                    <br><small class="text-muted">{{ cartao.categoria }}</small>
+                                {% endif %}
+                            </td>                            
+                            <td> {{ cartao.dia_limite }}</td>
+                            <td> {{ cartao.dia_vencimento }}</td>
+                            <td class = "fw-bold text-success">
+                                R$ {{ cartao.limite }}
+                            </td>
+                            <td class="text-center pe-3">
+                                <a href = "#" 
+                                class = "btn btn-sm btn-outline-warning" 
+                                title = "Editar">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <a href = "#" 
+                                class = "btn btn-sm btn-outline-danger" 
+                                onclick = "return confirm('Tem certeza que deseja excluir o cartão {{ cartao.nome_cartao }}?');" 
+                                title = "Excluir">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+
+                        {% empty %}
+                        <tr>
+                            <td colspan="9" class="text-center py-4">
+                                <i class="bi bi-credit-card-2-front fs-3 d-block text-muted mb-2"></i>
+                                <span class="text-muted">Nenhum cartão cadastrado.</span>
+                            </td>
+                        </tr>
+                    {%  endfor  %}
+                </tbody>
+            </table>
+        </div>
+    
+    
+
+
+
+    </div>
+{% endblock  %}

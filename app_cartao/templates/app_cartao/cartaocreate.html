@@ -1,0 +1,105 @@
+{% extends 'app_home/base.html' %}
+
+{% load static %}
+
+{% block title %}
+    Criar Cartao
+{% endblock %}
+
+{% block content %}
+    <h1>Criar Cartão de Crédito</h1>
+    <div class = "container">
+        <div class = "card">
+            <div class = "card-header">
+                <h5>Preencha os dados abaixo para criar um Cartão de Crédito</h5>
+            </div>
+
+            <div class = "card-body">
+                <form  class = "form-ajax" action = "{% url 'criar_cartao' %}"  method = "post">
+                    {% csrf_token %}
+                    
+
+                    <div class = "row">
+                        <div class = "col-md-6">
+                            <label class = "form-label">  {{ form.titular.label }}  </label>
+                            {{ form.titular }}
+                        </div>
+                        <div class = "col-md-6">
+                            <label class = "form-label" > {{ form.banco.label }}  </label>
+                            {{ form.banco }}
+                        </div>                        
+                    </div>
+
+                    <div class = "row">
+                        <div class = "col-md-6">
+                            <label class = "form-label"> {{ form.nome_cartao.label }}  </label>
+                            {{ form.nome_cartao }}
+                        </div>
+                        <div class = "col-md-6">
+                            <label class = "form-label" > {{ form.categoria.label }}  </label>
+                            {{ form.tipo_cartao }}
+                        </div>
+                        
+                    </div>
+
+                    <div class = "row">
+                        <div class = "col-md-6">
+                            <label class = "form-label" > {{ form.tipo_cartao.label }}  </label>
+                            {{ form.tipo_cartao }}
+                        </div>
+                        <div class = "col-md-3">
+                            <label class = "form-label" > {{ form.cartao_principal.label }}  </label>
+                            {{ form.cartao_principal }}
+                        </div>
+                       <div class = "col-md-3">
+                            <label class = "form-label" > {{ form.bandeira.label }}  </label>
+                            {{ form.bandeira }}
+                        </div>
+                    </div>
+
+                    
+
+
+
+                    <div class = "row">
+                        <div class = "col-md-3">
+                            <label class = "form-label" > {{ form.dia_vencimento.label }}  </label>
+                            {{ form.dia_vencimento }}
+                        </div>
+                        <div class = "col-md-3">
+                            <label class = "form-label" > {{ form.dia_limite.label }}  </label>
+                            {{ form.dia_limite }}
+                        </div>
+                        <div class = "col-md-3">
+                            <label class = "form-label" > {{ form.limite.label }}  </label>
+                            {{ form.limite }}
+                        </div>
+                        <div class = "col-md-3">
+                            <label class = "form-label" > {{ form.final.label }}  </label>
+                            {{ form.final }}
+                        </div>
+                    </div>
+
+                    <div class = "row">
+                        <div class = "col-md-6">
+                            <label class = "form-label"> {{ form.status.label }}  </label>
+                            {{ form.status }}
+                        </div>
+                        <div class = "col-md-6 form-check mt-5 ">
+                            <label class = "form-check-label ms-2" > {{ form.virtual.label }}  </label>
+                            {{ form.virtual }}
+                        </div>
+                        
+                    </div>
+
+                     <div class = "row">
+                        <div class = "col-md-12">
+                            <label class = "form-label" > {{ form.observacao.label }}  </label>
+                            {{ form.observacao }}
+                        </div>                        
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

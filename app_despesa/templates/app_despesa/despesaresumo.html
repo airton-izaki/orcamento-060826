@@ -1,0 +1,119 @@
+{% extends 'app_home/base.html' %}
+
+{% load static %}
+
+{% load l10n %}
+
+{% block title %}
+    Resumo Desepsa
+{% endblock %}
+
+{% block content %}
+    <!-- Link para o arquivo CSS externo -->
+    <link rel = "stylesheet" href = "{%  static  'style/resumo.css'%}">
+    
+
+    <div class = "container-fluid despesa-container py-3">
+        <!-- Cabeçalho -->
+        <div class = "row resumo-cabecalho">
+            <div class = "col-md-6 resumo-titulo">
+                <h2 class = "text-title">Resumo Consolidado de Despesas</h2>
+            </div>
+            <div class = "col-md-6 resumo-acoes">
+                <a  class = "btn btn-outline-secondary btn-sm" href = "{% url 'despesa' %}">
+                    <i class="bi bi-arrow-left me-1"></i> Voltar para Listagem
+                </a>
+            </div>
+        </div>
+
+        <!-- Card de Filtros -->
+        <div class = "card resumo-filtros">
+            <div class = "card-body">
+                <form class = "row g-3 align-items-end" method = "GET">
+                    <div class = "col-12 col-md-4">
+                        <label class = "form-label resumo-label">Data Inicial</label>
+                        <input class = "form-control" type = "date" name = "data_inicial" value = "{{ data_inicial }}">
+                    </div>
+
+                    <div class ="col-12 col-md-4">
+                        <label class = "form-label resumo-label">Data Final</label>
+                        <input class = "form-control" type = "date" name = "data_final" value = "{{ data_final }}">
+                    </div>
+
+                    <div class = "col-12 col-md-4 resumo-filtro-acoes">
+                        <button class = "btn btn-primary" type = "submit" >
+                            <i class="bi bi-funnel me-1"></i> Filtrar
+                        </button>
+                        <a class = "btn btn-outline-secondary"  href = "{% url 'despesa_resumo' %}"  title = "Limpar Filtros">
+                            <i class="bi bi-x-circle"></i>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Tabela Principal -->
+        <div class = "card resumo-tabela">
+            <div class="card-header resumo-tabela-header">
+                <span class="resumo-tabela-titulo">  Grupo / Espécie    </span>
+                <span class="badge bg-success resumo-total">  Total Geral: R$ {{ total_geral|floatformat:2 }}   </span>
+            </div>
+
+            <div class = "table-responsive">
+                <table class="table table-hover resumo-table">
+                    <tbody>
+                        {% for item in resumo_grupos %}
+                            <!-- Linha do Grupo (Clique para expandir) -->
+                            <tr class = "table-group-header"                                
+                                data-bs-toggle="collapse" 
+                                data-bs-target="#grupo{{ forloop.counter }}" 
+                                aria-expanded="false"
+                                aria-controls="grupo{{ forloop.counter }}"  >
+                                
+                                <td class = "grupo-nome">
+                                    <i class = "bi bi-chevron-right icon-collapse"></i>
+                                    {{ item.nome_grupo }}
+                                </td>
+                                <td class = "grupo-valor">
+                                    R$ {{ item.total_geral_grupo|floatformat:2 }}
+                                </td>
+                            </tr>
+
+                            <!-- Sub-tabela de Espécies (Conteúdo Colapsável) -->
+                            <tr class = "collapse" id = "grupo{{ forloop.counter }}">
+                                <td colspan = "2" class = "subgrupo-container">
+                                    <div class = "subgrupo-area">
+                                        <table class="table table-sm table-borderless">
+                                            <tbody>
+                                                {% for sub in item.subgrupos %}
+                                                    <tr>
+                                                        <td class = "subgrupo-nome">
+                                                            <i class = "bi bi-arrow-return-right"></i>
+                                                            {{ sub.nome_subgrupo }}
+                                                        </td>
+                                                        <td class = "subgrupo-valor">
+                                                            R$ {{ sub.valor_subgrupo|floatformat:2 }}
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td class = "nenhum-registro" colspan = "2">
+                                    <i class="bi bi-inbox"></i>
+                                    Nenhum registro encontrado para o período selecionado.
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    
+{% endblock %}

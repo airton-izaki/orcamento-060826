@@ -1,0 +1,42 @@
+{% extends 'app_home/base.html' %}
+
+{% load static %}
+
+{% block title %}
+    Criar Espécie
+{% endblock %}
+
+{% block content %}
+    <h1>Criar espécie de despesa</h1>
+    <div class = "container">
+        <div class = "card">
+            <div class = "card-header">
+                <h5 class = "card-title"> Cadastrar Espécie de Despesa </h5>
+            </div>
+
+            <div class = "card-body">
+                <form  class="form-ajax"  action = "{% url 'criar_especie' %}" method = "post">
+                    {% csrf_token %}
+
+                    <div class = "row">
+                        <div class = "col-12">
+                            <label class = "form-label" for = "{{ form.grupo.id_for_label }}"> Grupo de Despesa </label>
+                            {{ form.grupo }}
+                        </div>
+                        <div class = "col-12">
+                            <label class = "form-label" for = "{{ form.nomeEspecie.id_for_label }}"> Grupo de Despesa </label>
+                            {{ form.nomeEspecie }}
+                        </div>
+                   
+
+                    <div class = "card-button">
+                        <button class = "btn card-button-save" type = "submit">Cadastrar  Espécie</button>
+                        <button class = "btn  card-button-reset" type="reset">Cancelar</button>
+                        <a class = "btn card-button-back" href = "{% url 'despesa' %}">Voltar</a>
+                    </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

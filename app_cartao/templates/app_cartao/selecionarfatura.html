@@ -1,0 +1,154 @@
+{% extends 'app_home/base.html' %}
+
+{% load static %}
+
+{% block title %}
+   Selecionar Fatura
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+
+    <h2 class="mb-4">
+        Selecione o Cartão
+    </h2>
+
+    <div class="row">
+
+        {% for cartao in cartoes %}
+
+        <div class="col-md-4 mb-3">
+
+            <div class="card shadow-sm">
+
+                <div class="card-body">
+
+                    <h5 class="card-title">
+                        {{ cartao.nome_cartao }}
+                    </h5>
+
+                    <button
+                        type="button"
+                        class="btn btn-primary"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modalCompetencia"
+                        data-cartao-id="{{ cartao.id }}"
+                        data-cartao-nome="{{ cartao.nome_cartao }}"
+                    >
+                        Selecionar
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+<div class="modal fade"
+     id="modalCompetencia"
+     tabindex="-1">
+
+    <div class="modal-dialog">
+
+        <form method="get"
+              action="{% url 'fatura' %}">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        Selecione a Competência
+                    </h5>
+                </div>
+
+                <div class="modal-body">
+
+                    <input
+                        type="hidden"
+                        name="cartao_id"
+                        id="cartao_id">
+
+                    <div class="mb-3">
+
+                        <label>Mês</label>
+
+                        <select
+                            name="mes"
+                            class="form-select">
+
+                            <option value="1">Janeiro</option>
+                            <option value="2">Fevereiro</option>
+                            <option value="3">Março</option>
+                            <option value="4">Abril</option>
+                            <option value="5">Maio</option>
+                            <option value="6">Junho</option>
+                            <option value="7">Julho</option>
+                            <option value="8">Agosto</option>
+                            <option value="9">Setembro</option>
+                            <option value="10">Outubro</option>
+                            <option value="11">Novembro</option>
+                            <option value="12">Dezembro</option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label>Ano</label>
+
+                        <select
+                            name="ano"
+                            class="form-select">
+
+                            <option value="2026">2026</option>
+                            <option value="2027">2027</option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button
+                        type="submit"
+                        class="btn btn-success">
+
+                        Abrir Fatura
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script>
+
+document
+    .getElementById('modalCompetencia')
+    .addEventListener('show.bs.modal', function(event){
+
+        const botao = event.relatedTarget;
+
+        document
+            .getElementById('cartao_id')
+            .value = botao.getAttribute('data-cartao-id');
+
+    });
+
+</script>
+{% endblock %}

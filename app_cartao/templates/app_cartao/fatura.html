@@ -1,0 +1,115 @@
+{% extends 'app_home/base.html' %}
+
+{% load static %}
+
+{% block title %}
+    Fatura
+{% endblock %}
+
+{% block content %}
+    <link rel = "stylesheet" href = "{%  static 'style/fatura.css'  %}">
+    
+    <h1>Fatura</h1>
+    <div class="fatura-container">
+    <form method="post" action="{% url 'fatura' %}">
+        {% csrf_token %}
+        <input type="hidden" name="cartao_id" value="{{ cartao_selecionado }}">
+        <input type="hidden" name="ano" value="{{ ano_selecionado }}">
+        <input type="hidden" name="mes" value="{{ mes_selecionado }}">
+
+        <div class="fatura-card">
+            <div class="fatura-header">
+                <div class="fatura-header-inputs">
+                    <div class="fatura-field-group">
+                        <label>Mês</label>
+                        <input type="text" name="filtro_mes" value="{{ mes_nome }}" readonly>
+                    </div>
+                    <div class="fatura-field-group">
+                        <label>Ano</label>
+                        <input type="number" name="filtro_ano" value="{{ ano_selecionado }}" readonly>
+                    </div>
+                </div>
+                <div class="fatura-header-title">
+                    Fatura de {{ mes_nome }}/{{ ano_selecionado }}
+                </div>
+            </div>
+
+            <div class="fatura-table-wrapper">
+                <table class="fatura-table">
+                    <thead>
+                        <tr class="fatura-section-header">
+                            <th colspan="3">
+                                1. Resumo da Fatura: <span class="text-highlight">R$ {{ valor_total_fatura|floatformat:2 }}</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Valor Total das Compras</td>
+                            <td class="col-currency">R$</td>
+                            <td class="col-value text-bold">• {{ valor_total_fatura|floatformat:2 }}</td>
+                        </tr>
+                        <tr class="row-encargos">
+                            <td>• Encargos no Período</td>
+                            <td class="col-currency">R$</td>
+                            <td class="col-value">
+                                <input type="number" step="0.01" name="total_encargos" 
+                                    value="{{ total_encargos|stringformat:'.2f' }}" 
+                                    class="input-fatura input-encargos">
+                            </td>
+                        </tr>
+                        <tr class="text-muted text-small">
+                            <td>• Compras Nacionais</td>
+                            <td class="col-currency">R$</td>
+                            <td class="col-value">{{ compras_nacionais|floatformat:2 }}</td>
+                        </tr>
+                        <tr class="text-muted text-small">
+                            <td>• Compras Internacionais</td>
+                            <td class="col-currency">R$</td>
+                            <td class="col-value">{{ compras_internacionais|floatformat:2 }}</td>
+                        </tr>
+                    </tbody>
+
+                    <thead>
+                        <tr class="fatura-section-header">
+                            <th colspan="3">2. Informações de Pagamento</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Valor para Pagamento Total</td>
+                            <td class="col-currency">R$</td>
+                            <td class="col-value text-success">R$ {{ valor_total_fatura|floatformat:2 }}</td>
+                        </tr>
+                        <tr class="text-muted">
+                            <td>Pagamento Mínimo (75%)</td>
+                            <td class="col-currency">R$</td>
+                            <td class="col-value">{{ valor_minimo|floatformat:2 }}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-highlight">Valor Pago (Preenchível)</td>
+                            <td class="col-currency">R$</td>
+                            <td class="col-value">
+                                <input type="number" step="0.01" name="valor_pago" 
+                                    value="{{ fatura_atual.valor_pago|stringformat:'.2f' }}" 
+                                    class="input-fatura input-pago">
+                            </td>
+                        </tr>
+                        <tr class="row-remanescente">
+                            <td>Saldo Remanescente</td>
+                            <td>R$</td>
+                            <td class="col-value">{{ saldo_remanescente|floatformat:2 }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="fatura-footer">
+                <button type="submit" class="btn-salvar">
+                    💾 Salvar Dados da Fatura
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -8,4 +8,118 @@
 
 {% block content %}
     <h1>Cartão de Crédito</h1>
+    <div class = "container-fluid">
+        <div  class = "btn-header">
+            <ul class = "menu-navegacao">
+                <li  class = "menu-item">
+                    <button class = "btn-padrao btn-azul"
+                            id = "tab-filtros"
+                            data-bs-toggle = "offcanvas"
+                            data-bs-target = "#filtroCartao"
+                            type = "button">
+                        <i class = "bi bi-funnel"></i> Filtros
+                    </button>
+                 </li>
+                <li class = "menu-item">
+                    <a class = "btn-especie"  href = "{% url 'selecionar_fatura' %}">Fatura do Cartão</a>
+                </li>
+                <li class = "menu-item">
+                    <a class = "btn-grupo"  href = "{% url 'listar_cartao' %}">Listar Cartão</a>
+                </li>                
+            </ul>            
+        </div>
+    
+      
+        <div class = "table-responsive">
+            <table class = "table">
+                <thead>
+                    <tr>
+                        <th>Competência</th>
+                            {% for categoria in categorias %}
+                                <th class = "text-nowrap">{{ categoria }}</th>
+                            {% endfor %}
+                        <th class = "text-center">TOTAL</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for item in tabela_processada %}
+                        <tr>
+                            <!-- Nome da Competência -->
+                            <td class = "text-nowrap">
+                                {{ item.competencia }}
+                            </td>
+                            
+                            <!-- Valores das Categorias (Itera diretamente a lista 'valores') -->
+                            {% for valor in item.valores %}
+                                <td class = "text-nowrap">
+                                    {% if valor %}
+                                        <span class="fw-semibold text-dark">
+                                            R$ {{ valor|floatformat:2 }}
+                                        </span>
+                                    {% else %}
+                                        <span class = "text-muted opacity-50">—</span>
+                                    {% endif %}
+                                </td>
+                            {% endfor %}
+                            
+                            <!-- Valor Total -->
+                            <td class="text-end pe-3 fw-bold text-primary bg-light text-nowrap">
+                                R$ {{ item.total|floatformat:2 }}
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="{{ categorias|length|add:2 }}" class="text-center py-5 text-muted">
+                                <i class="bi bi-calendar-x fs-2 d-block mb-2 text-secondary"></i>
+                                <span>Nenhuma parcela encontrada para os parâmetros informados.</span>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>                    
+        </div>       
+    </div>
+
+<!-----Offcanvas - Filtros-------->
+    <div class = "offcanvas  offcanvas-start" tabindex = "-1" id = "filtroCartao">
+        <div class="offcanvas-header">
+            <h5 class = "offcanvas-title">Filtros</h5>
+            <button type = "button" class = "btn-close" data-bs-dismiss = "offcanvas"></button>
+        </div>
+
+        <div class = "offcanvas-body">
+            <form  method = "GET">
+                <!-------- Filtro - Ano ---------->
+                <div class = "md-3">
+                    <label class = "form-label">Ano</label>
+                    <input type = "number" name = "ano" value = "{{ request.GET.ano|default:'2026' }}" class = "form-control" placeholder = "Ex.: 2026">                   
+                </div>
+                <!-------- Filtro - Cartao ---------->
+                <div class = "md-3">
+                    <label class = "form-label">Cartão</label>
+                    <select name = "cartao" class = "form-select">
+                        <option value="">Todos os cartões</option>
+                            {% for c in form.fields.cartao.queryset %}
+                                <option value = "{{ c.id }}" {% if request.GET.cartao == c.id|stringformat:"s" %}selected{% endif %}>{{ c }}</option>
+                            {% endfor %}
+                    </select>
+                </div>
+                <!-------- Filtro - Status ---------->
+                <div class = "md-3">
+                    <label class="form-label">Status</label>
+                    <select name = "status" class = "form-select">
+                        <option value = "">Todos</option>
+                        <option value = "PENDENTE" {% if request.GET.status == "PENDENTE" %}selected{% endif %}>Pendente</option>
+                        <option value = "PAGO" {% if request.GET.status == "PAGO" %}selected{% endif %}>Pago</option>
+                    </select>
+                </div>
+                 <!-------- Filtro - Botão ---------->
+                <div class = "d-grid gap-2">
+                    <button  class = "btn btn-primary"  type = "submit">Aplicar Filtrar</button>
+                    <button  class = "btn btn-outline-secondary" type = "reset">Limpar Filtros</button>
+                </div>
+            </form>
+        </div>
+    </div>
 {% endblock %}

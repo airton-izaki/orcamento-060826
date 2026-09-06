@@ -1,0 +1,35 @@
+{% extends 'app_home/base.html' %}
+
+{% load static %}
+
+{% block title %}
+    Grupo de Despesa
+{% endblock %}
+
+{% block content %}
+    <h1>Criar Grupos de Despesas</h1>   
+    <div class = "container">
+        <div class = "card">
+            <div class="card-header">
+                <h5 class = "card-title">Criar Novo Grupo de Despesas</h5>
+            </div>
+
+            <div class = "card-body">
+                <form class = "form-ajax"  action = "{% url 'criar_grupo' %}" method = "post">
+                    {% csrf_token %}
+
+                    <div class = "principal">
+                        <label  class = "form-label" for = "{{ form.nomeGrupo.id_for_label }}">Nome do Grupo</label>
+                        {{ form.nomeGrupo}}
+                    </div>
+
+                    <div class="card-button">
+                        <button class = "card-button-save" type = "submit">Cadastrar  Grupo</button>
+                        <button class = "card-button-reset" type="reset">Cancelar</button>
+                        <a class = "btn card-button-back" href = "{% url 'despesa' %}">Voltar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div> 
+{% endblock %}

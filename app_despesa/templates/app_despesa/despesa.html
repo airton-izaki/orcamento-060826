@@ -7,5 +7,172 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Despesas</h1>    
+
+    <h1>Despesas</h1>
+    <div class = "btn-header">
+        <ul class = "menu-navegacao">
+            <li  class = "menu-item">
+                <button
+                 class = "btn btn-azul" 
+                 type = "button"
+                 data-bs-toggle = "offcanvas"
+                 data-bs-target = "#filtroCanvas">
+                    <span class="material-symbols-outlined">filter_alt</span>
+                    Filtros
+                </button>
+            </li>
+            <li class = "menu-item">
+                <a  class = "btn-despesa"  href = "{% url 'criar_despesa' %}">
+                    <span class="material-symbols-outlined">money_bag</span>
+                    Lançar Despesa
+                </a>
+            </li>
+            <li class = "menu-item">
+                <a class = "btn-grupo"   href = "{% url 'despesa_resumo' %}">  
+                    <span class="material-symbols-outlined">layers</span>
+                    Resumo das Despesas 
+                </a> 
+            </li>
+            <li class = "menu-item">
+                <a class = "btn-especie" href = "{% url 'criar_especie' %}">
+                    <span class="material-symbols-outlined">receipt_long</span>
+                    Criar Espécie de Despesa
+                </a>
+            </li>
+        </ul>      
+    </div>
+
+    <!--------------- Lisagem das despesas ----------------> 
+    <div class = "row">
+        <div class = "col-12">
+            <div class = "table-main">
+                <table  class="table table-hover">
+                    <thead  class = "table-thead">
+                        <tr>
+                            <td>DATA</td>
+                            <td>GRUPO</td>
+                            <td>ESPÉCIE</td>
+                            <td>DESCRIÇÃO</td>
+                            <td>fORMA DE PAGAMENTO</td>
+                            <td class = "text-end pe-3">Total: R$ {{ total_filtrado|floatformat:2 }}</td>
+                            <td class = 'text-center'>AÇÃO</td>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for despesa in movimentacoes %}
+                            <tr>
+                                <td class = "ps-3">
+                                    {{ despesa.data|date:"d/m/Y" }}
+                                </td>
+                                <td>
+                                    <span class="badge bg-info text-dark">
+                                        {{ despesa.grupo.nomeGrupo }}
+                                    </span>
+                                </td>
+                                <td>
+                                    {{ despesa.especie.nomeEspecie }}
+                                </td>
+                                <td class="fw-bold">
+                                    {{ despesa.descricao }}
+                                </td>
+                                <td>
+                                    {% if despesa.forma_pagamento == "DINHEIRO" %}
+                                        💵 Dinheiro
+                                    {% elif despesa.forma_pagamento == "DEBITO" %}
+                                        💳 Débito
+                                    {% elif despesa.forma_pagamento == "CARTAO" %}
+                                        🛍️ Cartão de Crédito
+                                    {% else %}
+                                        ❓ {{ despesa.forma_pagamento|default:"Não informado" }}
+                                    {% endif %}
+                                </td>
+                                <td class = "text-end pe-3 fw-bold text-primary">
+                                    R$ {{ despesa.valor }}
+                                </td>
+                                <td class = "text-center">
+                                    <a href = "{% url 'editar_despesa' despesa.despesa.pk|default:despesa.pk %}" 
+                                        class = "btn btn-sm btn-outline-warning">
+                                        <i class ="bi bi-pencil"></i>
+                                    </a>
+                                    <a href = "{% url 'deletar_despesa' despesa.despesa.pk|default:despesa.pk %}" 
+                                        class = "btn btn-sm btn-outline-danger" 
+                                        onclick = "return confirm('Excluir despesa?');">
+                                        <i class = "bi bi-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+
+                            {% empty %}
+
+                            <tr>
+                                <td colspan="7" class="text-center py-4">
+                                    <i class="bi bi-inbox fs-3 d-block text-muted"></i>
+                                    <span class="text-muted">Nenhuma despesa cadastrada</span>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <!-------------- OFFCANVAS - FILTROS ------------------------>
+    <div class="offcanvas offcanvas offcanvas-start"   tabindex = "-1"   id = "filtroCanvas">
+        <div class = "offcanvas-header">
+            <h5> Filtros </h5>
+            <button  class = "btn-close" type = "button"  data-bs-dismiss="offcanvas"></button>
+        </div>
+
+        <div class = "offcanvas-body">
+            <form  method = "get">
+                <div class = "mb-3">
+                    <label  class = "form-label">Data Inicial</label>
+                    <input  class = "form-control" type = "date" name = "data_inicio" value ="{{ request.GET.data_inicio }}">
+                </div>
+                <div class = "mb-3">
+                    <label  class = "form-label">Data Final</label>
+                    <input  class = "form-control"  type = "date"  name = "data_fim" value = "{{ request.GET.data_fim }}">
+                </div>
+                <div class = "mb-3">
+                    <label class = "form-label">Grupo</label>
+                    <select class = "form-select" id = "id_grupo" name = "grupo" id="">
+                        <option value = "">Selecione um grupo</option>
+                        {% for grupo in grupos %}
+                            <option value = "{{ grupo.id }}" {% if grupo.id|stringformat:"s" == request.GET.grupo %}selected{% endif %}>
+                                {{ grupo.nomeGrupo }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class = "mb-3">
+                    <label class = "form-label">Espécie</label>
+                    <select id="id_especie" name="especie" class="form-select">
+                        <option value="">Selecione uma espécie</option>
+                        {% for esp in especies %}
+                            <option value="{{ esp.id }}" {% if esp.id|stringformat:"s" == request.GET.especie %}selected{% endif %}>
+                                {{ esp.nomeEspecie }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class = "mb-3">
+                    <label class = "form-label">Tipo Pagamento</label>
+                    <select name="forma_pagamento" class="form-select">
+                        <option value="">Todos</option>
+                        <option value="DINHEIRO" {% if request.GET.pagamento == "DINHEIRO" %}selected{% endif %}>Dinheiro</option>
+                        <option value="DEBITO" {% if request.GET.pagamento == "DEBITO" %}selected{% endif %}>Débito</option>
+                        <option value="CARTAO" {% if request.GET.pagamento == "CARTAO" %}selected{% endif %}>Cartão</option>
+                    </select>
+                </div>
+                 <div class="d-grid gap-2">
+                    <button class="btn btn-primary" type="submit">Aplicar Filtros</button>
+                    <a href="{% url 'despesa' %}" class="btn btn-outline-secondary">Limpar Filtros</a>
+                </div>
+            </form>
+        </div>
+    </div>    
+    
 {% endblock %}
