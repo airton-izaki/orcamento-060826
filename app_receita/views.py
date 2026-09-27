@@ -87,11 +87,12 @@ class ReceitaCreateView(CreateView):
         return context
     
     def form_valid(self, form):
+        self.object = form.save()
         messages.success(self.request, "Receita cadastrada com sucesso!")
         return JsonResponse({
             'status': 'sucesso',
             'titulo': 'Sucesso!',
-            'message': 'Receita cadastrada com sucesso!',
+            'mensagem': 'Receita cadastrada com sucesso!',
             'redirect_url': str(self.success_url)
         })
 
