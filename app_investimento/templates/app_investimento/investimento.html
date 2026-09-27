@@ -1,0 +1,103 @@
+{% extends 'app_home/base.html' %}
+
+{% load static %}
+
+{% block title %}
+    Investimento
+{% endblock %}
+
+{% block content %}
+    
+    <div class = "container mt-5">
+        <div class = "btn-header">           
+            <ul class = "menu-navegacao">
+                <li  class = "menu-item">
+                    <button
+                    class = "btn btn-azul" 
+                    type = "button"
+                    data-bs-toggle = "offcanvas"
+                    data-bs-target = "#filtroCanvas">
+                        <span class = "material-symbols-outlined">filter_alt</span>
+                        Filtros
+                    </button>
+                </li>
+                <li class = "menu-item">
+                    <a  class = "btn-despesa"  href = "{% url 'investimento_criar' %}">
+                        <span class="material-symbols-outlined">money_bag</span>
+                        Criar Investimentos
+                    </a>
+                </li>
+                <li class = "menu-item">
+                    <a class = "btn-grupo"   href = "{% url 'investimento_resumo' %}">  
+                        <span class="material-symbols-outlined">layers</span>
+                        Resumo dos Investimenots 
+                    </a> 
+                </li>                
+            </ul> 
+            
+            <div class = "row mb-4 mt-4">
+                <div class = "col-12 titulo-pagina">
+                    <h2>Investimentos Total: R$ {{ total_filtrado|floatformat:2 }}</h2>
+                </div>
+            </div>
+        </div>
+
+        <!--------------- Lisagem dos investimentos ---------------->
+        <div class = "row">
+            <div class = "col-12 table-main">
+                <table class = "table  table-hover">
+                    <thead  class = "table-thead">
+                        <tr>
+                            <td>DATA DA APLICAÇÃO</td>
+                            <td>NOME</td>
+                            <td>INSTITUIÇÃO</td>                            
+                            <td>VENCIMENTO</td>
+                            <td>VALOR</td>                            
+                            <td class = "text-center">AÇÃO</td>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for investimento in investimentos %}
+                            <tr>
+                                <td> {{ investimento.data_aplicacao|date:"d/m/Y"  }} </td>
+                                <td> {{ investimento.nome_investimento }} </td>
+                                <td> {{ investimento.instituicao }} </td>
+                                <td>  
+                                    {% if investimento.data_vencimento %}
+                                        {{ investimento.data_vencimento|date:"d/m/Y" }}
+                                    {% else %}
+                                        —
+                                    {% endif %}
+                                </td>
+                                <td class = "text-end"> R$ {{ investimento.valor_inicial|floatformat:2 }} </td>
+                                <td class = "text-center">
+                                    <!-- Editar -->
+                                    <a href = "#"
+                                        class = "btn btn-sm"
+                                        title = "Editar">
+                                        <i class = "bi bi-pencil-square"></i>
+                                    </a>
+
+                                    <!-- Excluir -->
+                                    <a href = "#"
+                                        class = "btn btn-sm"
+                                        title = "Excluir">
+                                        <i class = "bi bi-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+
+                            {% empty %}        
+                                <tr>
+                                    <td colspan="7" class="text-center">
+                                        Nenhum investimento cadastrado.
+                                    </td>
+                                </tr>
+                        {% endfor %}                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}  

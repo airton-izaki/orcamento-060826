@@ -1,0 +1,452 @@
+/* ==========================================================================
+   VARIÁVEIS GLOBAIS
+   ========================================================================== */
+
+:root {
+    --bg-card: #ffffff;
+    --text-main: #212529;
+    --text-muted: #6c757d;
+    --border-color: #edf2f7;
+    --radius: 12px;
+    --transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    /* Cores das categorias */
+    --despesa-color: #dc3545;
+    --receita-color: #198754;
+    --investimento-color: #0dcaf0;
+    --cartao-color: #ffc107;
+}
+
+
+/* ==========================================================================
+   1. ESTRUTURA GLOBAL E GRID
+   ========================================================================== */
+
+
+
+
+
+/* ==========================================================================
+   2. CABEÇALHO DO DASHBOARD
+   ========================================================================== */
+
+.dashboard-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;    
+    gap: 2rem;
+    margin: 5.5rem 0 1.5rem;    
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid #e9ecef;
+}
+
+
+.dashboard-title {
+   display: flex; 
+   align-items: center; 
+   justify-content: center;
+   gap: 0.85rem; 
+   text-align: left;
+}
+
+.dashboard-title-icon { 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    flex-shrink: 0; 
+    width: 46px; 
+    height: 46px; 
+    font-size: 1.45rem; 
+    color: #0d6efd; 
+    background-color: #e7f1ff; 
+    border-radius: 10px; 
+}
+
+.dashboard-title-text { 
+    display: flex; 
+    flex-direction: column; }
+
+.dashboard-title-text h2 { 
+    margin: 0; 
+    font-size: 1.5rem; 
+    font-weight: 700; 
+    line-height: 1.25; 
+    color: var(--text-main); 
+} 
+
+.dashboard-title-text p { 
+    margin: 0.3rem 0 0; 
+    font-size: 0.9rem; 
+    line-height: 1.3; 
+    color: var(--text-muted); 
+}
+
+
+/* ==========================================================================
+   3. FILTROS
+   ========================================================================== */
+
+.dashboard-filters { 
+    display: flex; 
+    align-items: flex-end; 
+    gap: 0.65rem; 
+    flex-shrink: 0; 
+}
+
+.filter-group { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 0.3rem; 
+}
+
+.filter-group label { 
+    margin: 0; 
+    font-size: 0.75rem; 
+    font-weight: 600; 
+    color: var(--text-muted); 
+}
+
+.filter-select {
+    width: 145px; 
+    height: 40px;
+    padding: 0.5rem 2rem 0.5rem 0.8rem;
+    display: block;    
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #495057;
+    background-color: #ffffff;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 10px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    appearance: none;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.filter-select:hover {
+    border-color: #adb5bd;
+}
+
+.filter-select:focus {
+    border-color: #86b7fe;
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.12);
+}
+
+
+/* ==========================================================================
+   4. AÇÕES
+   ========================================================================== */
+
+.filter-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+}
+
+.btn-filter-submit,
+.btn-filter-reset {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 38px;
+    padding: 0.45rem 1rem;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.btn-filter-submit {
+    border-color: #0d6efd;
+    background-color: #0d6efd;
+    color: #ffffff;
+}
+
+.btn-filter-submit:hover {
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
+    box-shadow: 0 3px 8px rgba(13, 110, 253, 0.2);
+}
+
+.btn-filter-reset {
+    background-color: #ffffff;
+    color: #495057;
+    border-color: #ced4da;
+}
+
+.btn-filter-reset:hover {
+    background-color: #f8f9fa;
+    color: #212529;
+    border-color: #adb5bd;
+}
+
+
+
+/* ==========================================================================
+   5. CARDS DO DASHBOARD
+   ========================================================================== */
+
+.card {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    background-color: var(--bg-card);
+    border: none;
+    border-radius: var(--radius);
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    transition: var(--transition);
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+
+/* ==========================================================================
+   6. CABEÇALHO DOS CARDS
+   ========================================================================== */
+
+.card-header {
+    padding: 0.75rem 1rem 0.25rem;
+    background-color: transparent;
+    border: none;
+}
+
+.card-header-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0;
+    font-weight: 700;
+    color: #495057;
+}
+
+
+/* ==========================================================================
+   7. CORPO DOS CARDS
+   ========================================================================== */
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+}
+
+.card-content {
+    margin-bottom: 1.5rem;
+}
+
+.card-label {
+    margin-bottom: 0.25rem;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+.card-value {
+    margin-bottom: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+
+/* ==========================================================================
+   8. ÍCONES
+   ========================================================================== */
+
+.icon-box {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+}
+
+.icon-box i {
+    font-size: 1rem;
+}
+
+
+/* ==========================================================================
+   9. AÇÕES E LINKS DOS CARDS
+   ========================================================================== */
+
+.card-action {
+    margin-top: auto;
+    padding-top: 0.5rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none !important;
+}
+
+.card-link i {
+    transition: transform 0.2s ease;
+}
+
+.card-link:hover i {
+    transform: translateX(4px);
+}
+
+
+/* ==========================================================================
+   10. CORES DOS CARDS POR CATEGORIA
+   ========================================================================== */
+
+.card-despesas,
+.card-receitas,
+.card-cartao,
+.card-investimentos {
+    border-top: 4px solid;
+}
+
+.card-despesas {
+    border-top-color: var(--despesa-color);
+}
+
+.card-receitas {
+    border-top-color: var(--receita-color);
+}
+
+.card-cartao {
+    border-top-color: var(--cartao-color);
+}
+
+.card-investimentos {
+    border-top-color: var(--investimento-color);
+}
+
+
+/* Ícones */
+
+.icon-despesas {
+    background-color: #f8d7da;
+    color: var(--despesa-color);
+}
+
+.icon-receitas {
+    background-color: #d1e7dd;
+    color: var(--receita-color);
+}
+
+.icon-cartao {
+    background-color: #fff3cd;
+    color: #a17c03;
+}
+
+.icon-investimentos {
+    background-color: #cff4fc;
+    color: #087990;
+}
+
+
+/* Links */
+
+.link-despesas {
+    color: var(--despesa-color) !important;
+}
+
+.link-receitas {
+    color: var(--receita-color) !important;
+}
+
+.link-cartao,
+.link-investimentos {
+    color: #0d6efd !important;
+}
+
+
+/* ==========================================================================
+   11. RESPONSIVIDADE
+   ========================================================================== */
+
+@media (min-width: 768px) {
+
+    .header-container {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    .index-header {
+        flex: 1;
+    }
+
+    .filter-form {
+        justify-content: flex-end;
+    }
+}
+
+
+@media (max-width: 767px) {
+
+    .header-container {
+        padding-bottom: 1.5rem;
+    }
+
+    .index-title {
+        font-size: 1.3rem;
+    }
+
+    .index-title i {
+        width: 34px;
+        height: 34px;
+        font-size: 1.2rem;
+    }
+
+    .index-subtitle {
+        margin-left: 2.55rem;
+    }
+
+    .filter-form {
+        width: 100%;
+    }
+
+    .filter-select-wrapper {
+        flex: 1;
+    }
+
+    .filter-select {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .filter-buttons {
+        width: 100%;
+    }
+
+    .btn-filter-submit,
+    .btn-filter-reset {
+        flex: 1;
+    }
+
+    .col-6 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}

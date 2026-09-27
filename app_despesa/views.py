@@ -112,80 +112,126 @@ class DespesaListView(ListView):
     template_name = 'app_despesa/despesa.html'
     context_object_name = 'despesas'
 
-    def _get_filtros(self):
-        """Extrai os parâmetros da requisição e garante os valores padrão."""
-        get_params = self.request.GET.copy()
-        if not get_params.get('data_inicio'):
-            get_params['data_inicio'] = date.today().replace(day=1).strftime('%Y-%m-%d')
+    def get_queryset(self):        
+        query_params = self.request.GET.copy()
 
-        return get_params
-    
-    def get_queryset(self):
-        params = self._get_filtros()
-        return (
-            Despesa.objects.filtrar_por_parametros(params) # Ajuste no seu Custom Manager
-            .exclude(forma_pagamento='CARTAO')
-            .select_related('grupo', 'especie', 'cartao')
-            .order_by('-data')
-        )
+        if not query_params.get('data_inicio'):
+            hoje = date.today()
+
+            query_params['data_inicio'] = (
+                hoje.replace(day=1).strftime('%Y-%m-%d')
+            )
+
+        original_get = self.request.GET
+
+        try:
+            self.request.GET = query_params
+            despesas = (
+                Despesa.objects.filtrar_por_parametros(self.request).exclude(
+                    forma_pagamento = 'CARTAO'
+                )
+                .select_related(
+                    'grupo',
+                    'especie',
+                    'cartao'
+                ).order_by('-data')
+            )            
+
+        finally:
+            self.request.GET = original_get
+
+        return despesas
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        params = self._get_filtros()
+        despesas = list(self.object_list)
 
-        data_inicio = params.get('data_inicio')
-        data_fim = params.get('data_fim')
-        forma_pagamento = params.get('forma_pagamento')
-        grupo = params.get('grupo')
-        especie = params.get('especie')
+        data_inicio = self.request.GET.get('data_inicio')
+        data_fim = self.request.GET.get('data_fim')
 
-        # Total de despesas normais
-        total_despesas = self.object_list.aggregate(total=Sum('valor'))['total'] or 0
+        forma_pagamento = self.request.GET.get('forma_pagamento')
 
-        # Filtro de parcelas
-        parcelas_qs = DespesaParcelaCartao.objects.select_related(
-            'despesa', 'despesa__grupo', 'despesa__especie', 'despesa__cartao'
+        grupo = self.request.GET.get('grupo')
+        especie = self.request.GET.get('especie')
+
+
+        # despesas normais
+        total_despesas = (
+            self.object_list.aggregate(
+                total=Sum('valor')
+            )['total'] or 0
+        )
+
+        # parcelas cartão
+        parcelas = ( DespesaParcelaCartao.objects.select_related(
+                'despesa',  'despesa__grupo',   'despesa__especie', 'despesa__cartao' )
         )
 
         if forma_pagamento:
-            parcelas_qs = parcelas_qs.filter(despesa__forma_pagamento = forma_pagamento)
+            parcelas = parcelas.filter(
+                despesa__forma_pagamento=forma_pagamento
+            )
 
         if grupo:
-            parcelas_qs = parcelas_qs.filter(despesa__grupo_id = grupo)
+            parcelas = parcelas.filter(
+                despesa__grupo_id=grupo
+            )
 
         if especie:
-            parcelas_qs = parcelas_qs.filter(despesa__especie_id = especie)
+            parcelas = parcelas.filter(
+                despesa__especie_id=especie
+            )
 
         if data_inicio:
-            parcelas_qs = parcelas_qs.filter(data_vencimento__gte = data_inicio)
+            parcelas = parcelas.filter(
+                 data_vencimento__gte = data_inicio
+            )         
 
         if data_fim:
-            parcelas_qs = parcelas_qs.filter(data_vencimento__lte = data_fim)
+            parcelas = parcelas.filter( data_vencimento__lte = data_fim  )  
 
-        total_parcelas = parcelas_qs.aggregate(total=Sum('valor_parcela'))['total'] or 0
+        total_parcelas = (
+            parcelas.aggregate(
+                total = Sum('valor_parcela')
+            )['total'] or 0
+        )     
 
-        # Avalia o QuerySet em lista uma única vez para enriquecer os dados
-        parcelas_processadas = []
-        for parcela in parcelas_qs:
-            parcela.data = parcela.despesa.data + relativedelta(months = parcela.numero_parcela - 1)
-            parcela.descricao = f"{parcela.despesa.descricao} ({parcela.numero_parcela}/{parcela.despesa.parcela})"
+        for parcela in parcelas:         
+            parcela.data = (
+                parcela.despesa.data +
+                relativedelta(months=parcela.numero_parcela - 1)
+            )  
+            parcela.descricao = (
+                f"{parcela.despesa.descricao} "
+                f"({parcela.numero_parcela}/"
+                f"{parcela.despesa.parcela})"
+            )
+
             parcela.grupo = parcela.despesa.grupo
             parcela.especie = parcela.despesa.especie
             parcela.forma_pagamento = "CARTAO"
             parcela.valor = parcela.valor_parcela
-            parcelas_processadas.append(parcela)
 
-        # Unifica e ordena no Python
-        despesas_list = list(self.object_list)
-        movimentacoes = sorted(
-            chain(despesas_list, parcelas_processadas),
-            key=lambda x: getattr(x, 'data', getattr(x, 'data_vencimento', None)),
+
+        movimentacoes = list(
+            chain(
+                despesas,
+                parcelas
+            )
+        )
+
+        movimentacoes.sort(
+            key=lambda x: (
+                x.data
+                if hasattr(x, 'data')
+                else x.data_vencimento
+            ),
             reverse=True
         )
 
-        context['movimentacoes'] = movimentacoes
-        context['parcelas_cartao'] = parcelas_processadas
-        context['total_filtrado'] = total_despesas + total_parcelas
+        context['movimentacoes'] = movimentacoes        
+        context['parcelas_cartao'] = parcelas
+        context['total_filtrado'] = ( total_despesas + total_parcelas  )
 
         return context
 

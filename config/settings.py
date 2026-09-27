@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'app_despesa',
     'app_cartao',
     'app_receita',
+    'app_investimento',
     'app_user',    
 ]
 

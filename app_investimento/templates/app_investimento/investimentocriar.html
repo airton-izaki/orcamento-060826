@@ -1,0 +1,181 @@
+{% extends 'app_home/base.html' %}
+
+{% load static %}
+
+{% block title %}
+    Criar Investimento
+{% endblock %}
+
+{% block content %}
+    
+    <div class = "container mt-5">
+
+        <div class = "header">
+            <h5>Criar Investimento</h5>
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class = "alert alert-{{ message.tags }} alert-dismissible fade show shadow-sm" role="alert">
+                        {{ message }}
+                        <button type = "button" class="btn-close" data-bs-dismiss = "alert" aria-label = "Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+           
+        </div>
+        
+        <div class = "card">
+            <div class = "card-header">
+                <h5>Preencha os campos abaixo para criar um investimento</h5>
+            </div>
+        
+
+            <div class = "card-body">
+                <form  class = "form-ajax"  method = "post">
+                    {% csrf_token %}
+
+                    <div class = "row">
+                        <!--------- Nome do Investimento ---------->
+                        <div class = "col-md-6 mb-3">
+                            {% if form.non_field_errors %}
+                                <div class = "alert alert-danger">
+                                    {{ form.non_field_errors }}
+                                </div>
+                            {% endif %}
+                            <label  class = "form-label" for="{{ form.nome_investimento.id_for_label }}" >
+                                {{ form.nome_investimento.label }}
+                            </label>
+
+                            {{ form.nome_investimento }}
+
+                            {% if form.nome_investimento.errors %}
+                                <div class="text-danger">
+                                    {{ form.nome_investimento.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                         <!--------- Valor Inicial ---------->
+                        <div class = "col-md-6 mb-3">
+                            <label for = "{{ form.valor_inicial.id_for_label }}"
+                                class = "form-label">
+                                {{ form.valor_inicial.label }} 
+                            </label>
+
+                            {{ form.valor_inicial }}
+
+                            {% if form.valor_inicial.errors %}
+                                <div class = "text-danger">
+                                    {{ form.valor_inicial.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        
+
+                    </div>
+
+
+                    <div class = "row">
+                        <!--------- Tipo de Investimento ---------->
+                        <div class="col-md-6 mb-3">
+                            <label class = "form-label"  for = "{{ form.tipo.id_for_label }}" >
+                                {{ form.tipo.label }}
+                            </label>
+
+                            {{ form.tipo }}
+
+                            {% if form.tipo.errors %}
+                                <div class = "text-danger">
+                                    {{ form.tipo.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!--------- Instituição ---------->
+                        <div class = "col-md-6 mb-3">
+                            <label for="{{ form.instituicao.id_for_label }}"
+                                class="form-label">
+                                {{ form.instituicao.label }}
+                            </label>
+
+                            {{ form.instituicao }}
+
+                            {% if form.instituicao.errors %}
+                                <div class="text-danger">
+                                    {{ form.instituicao.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                       
+                    </div>
+
+                    <div class = "row"> 
+                        <!--------- Data da Aplicação ---------->
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.data_inicio.id_for_label }}" class="form-label">
+                                Data da Aplicação
+                            </label>
+
+                            {{ form.data_inicio }}
+
+                            {% if form.data_inicio.errors %}
+                                <div class="text-danger">
+                                    {{ form.data_inicio.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!--------- Data de Vencimento ---------->
+                        <div class = "col-md-6 mb-3">
+                            <label for = "{{ form.data_fim.id_for_label }}"
+                                class = "form-label">
+                                {{ form.data_fim.label }}
+                            </label>
+
+                            {{ form.data_fim }}
+
+                            {% if form.data_recebdata_fimimento.errors %}
+                                <div class="text-danger">
+                                    {{ form.data_fim.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        
+
+                    </div>
+
+                    <div class = "row">
+                        <div class = "col-md-12 mb-3">
+                            <label for = "{{ form.observacao.id_for_label }}"
+                                class = "form-label">
+                                {{ form.observacao.label }}
+                            </label>
+
+                            {{ form.observacao }}
+
+                            {% if form.observacao.errors %}
+                                <div class = "text-danger">
+                                    {{ form.observacao.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2">
+                        <button  class = "btn btn-success" type = "submit"> Salvar Receita </button>
+                        <button   class = "btn btn-info" type = "reset"> Limpar </button>
+                        <a href = "{% url 'investimento' %}" class = "btn btn-secondary">  Voltar </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+
+
+    </div>
+{% endblock %}
