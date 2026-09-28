@@ -6,7 +6,7 @@ from dateutil.relativedelta                 import relativedelta
 from django                                 import forms
 from django.shortcuts                       import render, get_object_or_404, redirect
 from django.views.generic                   import TemplateView, CreateView, ListView, UpdateView, DeleteView
-from django.http                            import JsonResponse, HttpResponseRedirect
+from django.http                            import JsonResponse, HttpResponseRedirect, HttpResponseNotAllowed
 from django.urls                            import reverse_lazy
 from django.db                              import IntegrityError, transaction
 from django.db.models                       import Sum
@@ -335,10 +335,7 @@ class DespesaDeleteView(DeleteView):
     success_url = reverse_lazy('despesa')
 
     def get(self, request, pk, *args, **kwargs):
-        despesa = get_object_or_404(Despesa, pk = pk)
-        despesa.delete()
-
-        return redirect('despesa')
+        return HttpResponseNotAllowed(['POST'])
     
 # ────────────────────────────────────────────────────────────────────────
 # Despesa - Editar

@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib import messages
 from django.views.generic       import TemplateView
 from django.db.models               import Sum
 from datetime                   import date
@@ -17,16 +18,25 @@ class HomeView (TemplateView):
         hoje = date.today()
 
         # 1. Captura as strings da URL
-        mes_raw = self.request.GET.get('mes', str(hoje.month))
+        mes_raw = self.request.GET.get('mes')
         ano_raw = self.request.GET.get('ano', str(hoje.year))
 
         # 2. Limpa qualquer caractere que não seja número
-        mes_limpo = ''.join(filter(str.isdigit, mes_raw))
         ano_limpo = ''.join(filter(str.isdigit, ano_raw))
 
         # 3. FORÇA A CONVERSÃO PARA INTEIRO (Crucial para o ORM do Django)
-        mes_selecionado = int(mes_limpo) if mes_limpo else int(hoje.month)
+        try:
+            mes_selecionado = int(mes_raw)
+        except (TypeError, ValueError):
+            mes_selecionado = hoje.month
+            if mes_raw is not None:
+                messages.error(self.request, 'Digite um mês válido (de 1 a 12).')
+
         ano_selecionado = int(ano_limpo) if ano_limpo else int(hoje.year)
+
+        if not 1 <= mes_selecionado <= 12:
+            mes_selecionado = hoje.month
+            messages.error(self.request, 'Digite um mês válido (de 1 a 12).')
 
         meses_ano = [
             '', 'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
