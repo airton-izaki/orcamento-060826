@@ -7,6 +7,8 @@
 {% endblock %}
 
 {% block content %}
+    <div class="despesa-form-page">
+    <link rel = "stylesheet" href = "{% static 'style/despesa.css' %}">
     <h1>Criar despesas</h1>
      <div class = "btn-header">
         <ul class = "menu-navegacao">
@@ -133,7 +135,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="mt-4 d-flex gap-2">
+                <div class="despesa-form-actions mt-4">
                     <button  class = "btn btn-success btn-lg w-100"  type = "submit"   name = "acao"  value = "salvar">Salvar Despesa</button>
                     <button  class = "btn btn-warning" type = "submit" name = "acao"  value = "salvar_novo">Salvar e Nova Despesa</button>
                     <a href="{% url 'despesa' %}" class="btn btn-secondary btn-lg w-100 d-flex align-items-center justify-content-center">Voltar</a>
@@ -147,4 +149,5 @@
     
     <script src = "{% static 'js/filtro_grupo_especie.js' %}"></script>
     <script src = "{% static 'js/modal_cartao.js' %}"></script>
+    </div>
 {% endblock %}

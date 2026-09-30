@@ -507,13 +507,13 @@ class DespesaResumoView(TemplateView):
                 'subgrupos': subgrupos
             })
 
-            context.update({
-                'resumo_grupos': resumo_grupos,
-                'total_geral': total_geral,
-                'data_inicial': data_inicial.isoformat(),
-                'data_final': data_final.isoformat(),
-            })
+        context.update({
+            'resumo_grupos': resumo_grupos,
+            'total_geral': total_geral,
+            'data_inicial': data_inicial.isoformat(),
+            'data_final': data_final.isoformat(),
+        })
 
-            return context
+        return context
 
 

@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block content %}
-
+    <link rel = "stylesheet" href = "{% static 'style/despesa.css' %}">
     <h1>Despesas</h1>
     <div class = "btn-header">
         <ul class = "menu-navegacao">
@@ -33,12 +33,7 @@
                     Resumo das Despesas 
                 </a> 
             </li>
-            <li class = "menu-item">
-                <a class = "btn-especie" href = "{% url 'criar_especie' %}">
-                    <span class="material-symbols-outlined">receipt_long</span>
-                    Criar Espécie de Despesa
-                </a>
-            </li>
+            
         </ul>      
     </div>
 

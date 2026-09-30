@@ -1,10 +1,14 @@
 {% extends 'app_home/base.html' %}
 
+{% load static %}
+
 {% block title %}
     Home
 {% endblock %}
 
-{% block content %}    
+{% block content %}
+    <div class="despesa-form-page">
+    <link rel = "stylesheet" href = "{% static 'style/despesa.css' %}">
     <div class="container mt-4">
         <div class="card shadow-sm border-0 mx-auto" style="max-width: 800px;">
 
@@ -158,5 +162,6 @@
                 </form>
             </div>
         </div>
+    </div>
     </div>
 {% endblock %}

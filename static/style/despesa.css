@@ -1,0 +1,220 @@
+/* Estilos das telas de cadastro e edição de despesas. */
+.despesa-form-page {
+    --despesa-azul: #2563eb;
+    --despesa-azul-escuro: #1e40af;
+    --despesa-texto: #172033;
+    --despesa-borda: #dbe4f0;
+    color: var(--despesa-texto);
+    padding-bottom: 2rem;
+}
+
+.despesa-form-page > h1 {
+    margin: 0 0 1.25rem;
+    color: #fff;
+    font-size: clamp(1.65rem, 3vw, 2.25rem);
+    font-weight: 700;
+    letter-spacing: -.03em;
+    text-shadow: 0 2px 12px rgb(8 20 42 / 55%);
+}
+
+.despesa-form-page .card {
+    overflow: hidden;
+    border: 1px solid rgb(255 255 255 / 72%);
+    border-radius: 1rem;
+    background: #fff;
+    box-shadow: 0 18px 48px rgb(7 18 38 / 32%);
+}
+
+.despesa-form-page .card-header {
+    padding: 1.1rem 1.5rem;
+    border: 0;
+    background: linear-gradient(120deg, #1d4ed8, #3b82f6) !important;
+    color: #fff;
+}
+
+.despesa-form-page .card-header h4,
+.despesa-form-page .card-header h5 {
+    margin: 0;
+    color: inherit;
+    font-weight: 700;
+}
+
+.despesa-form-page .card-body {
+    padding: clamp(1.15rem, 3vw, 2rem);
+}
+
+.despesa-form-page .form-label {
+    display: block;
+    margin-bottom: .7rem;
+    color: #34425a;
+    font-size: .9rem;
+    font-weight: 600;
+}
+
+.despesa-form-page form .row {
+    --bs-gutter-y: 1.35rem;
+}
+
+.despesa-form-page .principal {
+    margin-bottom: 1.35rem;
+}
+
+.despesa-form-page input:not([type="checkbox"]):not([type="radio"]),
+.despesa-form-page select,
+.despesa-form-page textarea {
+    width: 100%;
+    min-height: 2.85rem;
+    padding: .65rem .85rem;
+    border: 1px solid var(--despesa-borda);
+    border-radius: .65rem;
+    background-color: #f8fafc;
+    color: var(--despesa-texto);
+    font: inherit;
+    transition: border-color .18s ease, box-shadow .18s ease, background-color .18s ease;
+}
+
+.despesa-form-page textarea {
+    min-height: 6rem;
+    resize: vertical;
+}
+
+.despesa-form-page input:focus,
+.despesa-form-page select:focus,
+.despesa-form-page textarea:focus {
+    border-color: var(--despesa-azul);
+    outline: 0;
+    background-color: #fff;
+    box-shadow: 0 0 0 .22rem rgb(37 99 235 / 16%);
+}
+
+.despesa-form-page .btn {
+    border-radius: .65rem;
+    font-weight: 600;
+    transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
+}
+
+.despesa-form-page .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 14px rgb(15 23 42 / 15%);
+}
+
+.despesa-form-page .card-button-save,
+.despesa-form-page .card-button-reset,
+.despesa-form-page .card-button-back {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14rem;
+    min-height: 2.7rem;
+    padding: .55rem 1rem;
+    border: 0;
+    border-radius: .65rem;
+    font: inherit;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
+}
+
+.despesa-form-page .card-button-save {
+    background: #16a34a;
+    color: #fff;
+}
+
+.despesa-form-page .card-button-reset {
+    background: #e2e8f0;
+    color: #334155;
+}
+
+.despesa-form-page .card-button-back {
+    background: #334155;
+    color: #fff;
+}
+
+.despesa-form-page .card-button-save:hover,
+.despesa-form-page .card-button-reset:hover,
+.despesa-form-page .card-button-back:hover {
+    transform: translateY(-1px);
+    filter: brightness(.96);
+    box-shadow: 0 5px 14px rgb(15 23 42 / 15%);
+}
+
+.despesa-form-page .card-button {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .65rem;
+    margin-top: 1.4rem;
+}
+
+.despesa-form-page .despesa-form-actions {
+    display: flex;
+    gap: .75rem;
+    align-items: stretch;
+}
+
+.despesa-form-page .despesa-form-actions .btn {
+    display: inline-flex;
+    flex: 1 1 0;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    min-height: 3rem;
+    padding: .65rem 1rem;
+    white-space: normal;
+    text-align: center;
+}
+
+.despesa-form-page .btn-header {
+    margin-bottom: 1rem;
+}
+
+.despesa-form-page .menu-navegacao {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .65rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.despesa-form-page .btn_grupo,
+.despesa-form-page .btn_especie {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.65rem;
+    padding: .55rem 1rem;
+    border: 1px solid rgb(255 255 255 / 50%);
+    border-radius: .65rem;
+    background: rgb(15 23 42 / 72%);
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+    backdrop-filter: blur(8px);
+    transition: background-color .18s ease, transform .18s ease;
+}
+
+.despesa-form-page .btn_grupo:hover,
+.despesa-form-page .btn_especie:hover {
+    transform: translateY(-1px);
+    background: var(--despesa-azul-escuro);
+    color: #fff;
+}
+
+.despesa-form-page .text-danger {
+    margin-top: .35rem;
+    font-weight: 500;
+}
+
+@media (max-width: 575.98px) {
+    .despesa-form-page .card-body {
+        padding: 1.1rem;
+    }
+
+    .despesa-form-page .despesa-form-actions {
+        flex-direction: column;
+    }
+
+    .despesa-form-page .despesa-form-actions .btn {
+        width: 100%;
+    }
+}

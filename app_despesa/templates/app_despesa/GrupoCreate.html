@@ -7,7 +7,9 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Criar Grupos de Despesas</h1>   
+    <link rel = "stylesheet" href = "{% static 'style/despesa.css' %}">
+    <div class="despesa-form-page">
+    <h1>Criar Grupos de Despesas</h1>
     <div class = "container">
         <div class = "card">
             <div class="card-header">
@@ -23,13 +25,16 @@
                         {{ form.nomeGrupo}}
                     </div>
 
-                    <div class="card-button">
+                    <div class = "card-button">
+                        
                         <button class = "card-button-save" type = "submit">Cadastrar  Grupo</button>
-                        <button class = "card-button-reset" type="reset">Cancelar</button>
+                        <button class = "card-button-reset" type = "reset">Cancelar</button>
                         <a class = "btn card-button-back" href = "{% url 'despesa' %}">Voltar</a>
+                        <a class = "btn card-button-info" href = "{% url 'criar_especie' %}">Cadastrar  Espécie</a>
                     </div>
                 </form>
             </div>
         </div>
-    </div> 
+    </div>
+    </div>
 {% endblock %}
